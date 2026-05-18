@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" aria-hidden="true">
+  <rect width="800" height="600" fill="#5C3D2E"/>
+  <rect x="40" y="40" width="720" height="520" rx="16" fill="#3D2314"/>
+  <circle cx="400" cy="280" r="80" fill="#8B2635"/>
+  <rect x="360" y="360" width="80" height="120" rx="8" fill="#E8C4A0"/>
+  <ellipse cx="400" cy="240" rx="60" ry="40" fill="#FFF6E8"/>
+  <text x="400" y="520" text-anchor="middle" fill="#F5E6C8" font-family="sans-serif" font-size="18" opacity="0.7">Ambachtelijk bereiden</text>
+</svg>

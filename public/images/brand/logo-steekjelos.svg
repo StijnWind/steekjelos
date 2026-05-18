@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 72" role="img" aria-label="Steekjelos">
+  <defs>
+    <filter id="logo-shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#3D2314" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <text
+    x="4"
+    y="54"
+    font-family="Lobster, Pacifico, cursive"
+    font-size="52"
+    fill="#8B2635"
+    stroke="#FFF6E8"
+    stroke-width="3"
+    paint-order="stroke fill"
+    filter="url(#logo-shadow)"
+  >Steekjelos</text>
+  <ellipse cx="278" cy="38" rx="22" ry="14" fill="#F5E6C8" stroke="#FFF6E8" stroke-width="2"/>
+  <path d="M262 52 L278 28 L294 52 Z" fill="#E8C4A0" stroke="#5C3D2E" stroke-width="1.5"/>
+  <circle cx="278" cy="34" r="6" fill="#FFF6E8" opacity="0.6"/>
+</svg>

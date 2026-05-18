@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Steekijs ijskar in het park">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFE4B5"/>
+      <stop offset="60%" stop-color="#F5C98A"/>
+      <stop offset="100%" stop-color="#8B5A2B"/>
+    </linearGradient>
+    <linearGradient id="vignette" x1="0.5" y1="0.5" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#3D2314" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#3D2314" stop-opacity="0.5"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="85%" cy="15%" r="35%">
+      <stop offset="0%" stop-color="#FFE566" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#FFE566" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#sky)"/>
+  <rect width="1200" height="675" fill="url(#sun)"/>
+  <ellipse cx="600" cy="580" rx="500" ry="80" fill="#5C8A3C" opacity="0.5"/>
+  <rect x="350" y="280" width="500" height="220" rx="12" fill="#8B2635"/>
+  <path d="M400 280 L600 180 L800 280 Z" fill="#E02020"/>
+  <rect x="420" y="320" width="360" height="140" rx="8" fill="#FFF6E8" opacity="0.9"/>
+  <ellipse cx="520" cy="400" rx="35" ry="45" fill="#F5E6C8"/>
+  <ellipse cx="600" cy="390" rx="40" ry="50" fill="#FFF6E8"/>
+  <ellipse cx="680" cy="400" rx="35" ry="45" fill="#F5E6C8"/>
+  <rect width="1200" height="675" fill="url(#vignette)"/>
+</svg>

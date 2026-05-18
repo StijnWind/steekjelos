@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+  <defs>
+    <filter id="n">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+  <rect width="400" height="400" fill="#E8D4B8"/>
+  <rect width="400" height="400" fill="#D4BC96" opacity="0.4" filter="url(#n)"/>
+  <rect width="400" height="400" fill="url(#k)" opacity="0.15"/>
+  <defs>
+    <linearGradient id="k" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFF6E8"/>
+      <stop offset="100%" stop-color="#C9A87A"/>
+    </linearGradient>
+  </defs>
+</svg>

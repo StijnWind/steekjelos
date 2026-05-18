@@ -1,0 +1,144 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Nunito', ui-sans-serif, system-ui, sans-serif;
+    --font-script: 'Lobster', cursive;
+    --font-chalk: 'Caveat', cursive;
+    --font-display: 'Bebas Neue', sans-serif;
+
+    --color-steekijs-bordeaux: #8b2635;
+    --color-steekijs-red: #7a1f2e;
+    --color-steekijs-cta: #c41e3a;
+    --color-steekijs-cream: #fffaf3;
+    --color-steekijs-vanilla: #f7efe3;
+    --color-steekijs-wood: #3d2314;
+    --color-steekijs-wood-mid: #5c3d2e;
+    --color-steekijs-caramel: #a67c52;
+    --color-steekijs-chocolate: #2c1810;
+    --color-steekijs-gray: #6b5b4f;
+    --color-steekijs-light: #f7efe3;
+    --color-steekijs-strawberry: #c44d4d;
+    --color-steekijs-orange: #e8a04a;
+    --color-steekijs-yellow: #e8b84a;
+    --color-steekijs-navy: #2c1810;
+
+    --radius-card: 1rem;
+    --radius-lg: 1.25rem;
+    --shadow-card: 0 4px 24px rgb(44 24 16 / 8%);
+    --shadow-card-hover: 0 12px 40px rgb(44 24 16 / 12%);
+    --shadow-button: 0 4px 14px rgb(139 38 53 / 28%);
+}
+
+@layer base {
+    body {
+        @apply bg-steekijs-cream font-sans text-steekijs-chocolate antialiased;
+    }
+
+    ::selection {
+        @apply bg-steekijs-bordeaux/20 text-steekijs-chocolate;
+    }
+}
+
+@layer components {
+    .site-container {
+        @apply mx-auto w-full max-w-6xl px-6;
+    }
+
+    .section-padding {
+        @apply py-16 md:py-24;
+    }
+
+    .card {
+        @apply rounded-2xl border border-steekijs-vanilla bg-white p-6 shadow-[var(--shadow-card)] md:p-8;
+    }
+
+    .card-hover {
+        @apply transition duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-card-hover)];
+    }
+
+    .image-frame {
+        @apply overflow-hidden rounded-2xl shadow-[var(--shadow-card)];
+    }
+
+    .image-frame img {
+        @apply h-full w-full object-cover transition duration-500 hover:scale-[1.02];
+    }
+
+    .hero-overlay {
+        background:
+            linear-gradient(
+                100deg,
+                rgb(44 24 16 / 78%) 0%,
+                rgb(44 24 16 / 42%) 38%,
+                rgb(44 24 16 / 12%) 58%,
+                transparent 72%
+            ),
+            linear-gradient(to top, rgb(44 24 16 / 55%) 0%, transparent 45%);
+    }
+
+    @media (max-width: 1023px) {
+        .hero-overlay {
+            background: linear-gradient(
+                to top,
+                rgb(44 24 16 / 88%) 0%,
+                rgb(44 24 16 / 50%) 42%,
+                rgb(44 24 16 / 15%) 68%,
+                transparent 100%
+            );
+        }
+    }
+
+    .form-input {
+        @apply w-full rounded-xl border border-steekijs-vanilla bg-white px-4 py-3 text-steekijs-chocolate shadow-sm transition placeholder:text-steekijs-gray/60 focus:border-steekijs-bordeaux focus:outline-none focus:ring-2 focus:ring-steekijs-bordeaux/15;
+    }
+
+    .label {
+        @apply mb-1.5 block text-sm font-semibold text-steekijs-chocolate;
+    }
+
+    .nav-link {
+        @apply rounded-lg px-4 py-2 text-sm font-semibold text-steekijs-gray transition hover:bg-steekijs-vanilla hover:text-steekijs-bordeaux;
+    }
+
+    .nav-link-active {
+        @apply bg-steekijs-bordeaux text-white hover:bg-steekijs-red hover:text-white;
+    }
+
+    .accent-line {
+        @apply mx-auto mt-3 h-1 w-16 rounded-full bg-steekijs-cta;
+    }
+
+    .menu-item-btn {
+        @apply w-full rounded-xl border border-steekijs-vanilla bg-steekijs-cream px-4 py-3 text-left transition hover:border-steekijs-bordeaux/30 hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-steekijs-bordeaux/30 aria-pressed:border-steekijs-bordeaux aria-pressed:bg-steekijs-bordeaux/5 aria-pressed:ring-2 aria-pressed:ring-steekijs-bordeaux/20;
+    }
+}
+
+@layer utilities {
+    .font-script {
+        font-family: var(--font-script);
+    }
+
+    .font-chalk {
+        font-family: var(--font-chalk);
+    }
+
+    .font-display {
+        font-family: var(--font-display);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .card-hover,
+    .image-frame img {
+        transition: none;
+    }
+
+    .card-hover:hover {
+        transform: none;
+    }
+}
