@@ -1,58 +1,187 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Steekjelos — website
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Marketingwebsite voor **Steekjelos** (merk) en **Steekijs** (product). Bezoekers kunnen het aanbod bekijken, een prijsindicatie berekenen en contact opnemen.
 
-## About Laravel
+## Tech stack
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+| Onderdeel | Technologie |
+|-----------|-------------|
+| Backend | [Laravel](https://laravel.com) 13, PHP 8.3+ |
+| Templates | Blade |
+| Styling | Tailwind CSS v4, Vite 8 |
+| Frontend | Vanilla JavaScript (menu-selectie, prijscalculator, contactformulier) |
+| Database | SQLite (standaard, lokaal) |
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Vereisten
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- [Git](https://git-scm.com/)
+- [PHP](https://www.php.net/) 8.3 of hoger (extensies: `mbstring`, `openssl`, `pdo`, `tokenizer`, `xml`, `ctype`, `json`, `bcmath`)
+- [Composer](https://getcomposer.org/)
+- [Node.js](https://nodejs.org/) 20+ en npm
 
-## Learning Laravel
+## Repository ophalen via CLI
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Eerste keer (clone)
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+Kies een map waar je projecten bewaart en clone de repository:
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/JOUW-ORGANISATIE/websitesteekjelos.git
+cd websitesteekjelos
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Vervang de URL door de echte remote van jullie Git-hosting (GitHub, GitLab, Azure DevOps, enz.).
 
-## Contributing
+**Clone via SSH** (als je SSH-sleutels hebt ingesteld):
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+git clone git@github.com:JOUW-ORGANISATIE/websitesteekjelos.git
+cd websitesteekjelos
+```
 
-## Code of Conduct
+### Updates binnenhalen (pull)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Als je het project al lokaal hebt en alleen de nieuwste wijzigingen wilt:
 
-## Security Vulnerabilities
+```bash
+cd pad/naar/websitesteekjelos
+git pull
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Bij een specifieke branch:
 
-## License
+```bash
+git pull origin main
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Na een pull altijd dependencies en assets bijwerken als er wijzigingen zijn in `composer.lock`, `package.json` of front-end bestanden:
+
+```bash
+composer install
+npm install
+npm run build
+```
+
+## Installatie
+
+### Snelle setup (aanbevolen)
+
+```bash
+composer setup
+```
+
+Dit script voert uit: `composer install`, `.env` aanmaken, app key genereren, migraties, `npm install` en `npm run build`.
+
+### Handmatige setup
+
+```bash
+composer install
+cp .env.example .env   # Windows: copy .env.example .env
+php artisan key:generate
+php artisan migrate
+npm install
+npm run build
+```
+
+### Contactgegevens en menu
+
+- Bedrijfsgegevens: [`config/steekijs.php`](config/steekijs.php)
+- Menukaart (smaken, opties): [`config/menu.php`](config/menu.php)
+
+## Ontwikkeling
+
+Start Laravel, Vite en hulpdiensten tegelijk:
+
+```bash
+composer dev
+```
+
+De site draait standaard op [http://127.0.0.1:8000](http://127.0.0.1:8000).
+
+Alleen de PHP-server (zonder hot reload voor CSS/JS):
+
+```bash
+php artisan serve
+```
+
+In een tweede terminal voor Vite:
+
+```bash
+npm run dev
+```
+
+## Tests
+
+```bash
+composer test
+```
+
+of:
+
+```bash
+php artisan test
+```
+
+## Productie-build
+
+```bash
+npm run build
+```
+
+Zorg dat `APP_ENV=production` en `APP_DEBUG=false` in `.env` staan op de server. Punt de webserver-documentroot naar de map `public/`.
+
+## Pagina’s
+
+| URL | Beschrijving |
+|-----|--------------|
+| `/` | Home |
+| `/prijzen` | Menukaart en prijscalculator |
+| `/contact` | Contactformulier |
+
+## Belangrijke mappen
+
+```
+websitesteekjelos/
+├── app/                 # PHP-applicatiecode
+├── config/              # Configuratie (steekijs, menu)
+├── public/              # Webroot (img/, images/, build/)
+├── resources/
+│   ├── css/app.css      # Tailwind & design tokens
+│   ├── js/              # JavaScript
+│   └── views/           # Blade-templates
+├── routes/web.php       # Routes
+└── tests/               # Feature tests
+```
+
+### Afbeeldingen
+
+| Pad | Gebruik |
+|-----|---------|
+| `public/img/` | Hero en featurefoto’s (`image.png`, `Untitled*.png`) |
+| `public/images/posters/` | Posterafbeeldingen (product, menukaart) |
+| `public/images/brand/` | Logo |
+| `public/build/` | Gecompileerde CSS/JS (na `npm run build`) |
+
+## Veelvoorkomende Git-commando’s
+
+```bash
+# Status bekijken
+git status
+
+# Wijzigingen ophalen
+git pull
+
+# Nieuwe branch
+git checkout -b feature/mijn-aanpassing
+
+# Wijzigingen committen
+git add .
+git commit -m "Beschrijving van de wijziging"
+
+# Branch naar remote pushen
+git push -u origin feature/mijn-aanpassing
+```
+
+## Licentie
+
+MIT (Laravel skeleton). Inhoud en merkafbeeldingen zijn eigendom van Steekjelos.
