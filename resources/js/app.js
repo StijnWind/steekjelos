@@ -1,12 +1,32 @@
 import { fetchDrivingDistance } from './prijs-afstand';
-import { calculatePrice } from './prijs-calculator';
+import { calculatePrice, normalizePostcode } from './prijs-calculator';
 import { initMenuSelection } from './prijs-menu';
+import { renderPriceBreakdown } from './prijs-opbouw';
 
 document.addEventListener('DOMContentLoaded', () => {
     initContactForm();
     initMenuSelection();
     initPrijsCalculator();
+    initPostcodeFormatting();
 });
+
+function initPostcodeFormatting() {
+    const postcodeInput = document.getElementById('postcode');
+
+    if (!postcodeInput) {
+        return;
+    }
+
+    const formatPostcodeField = () => {
+        const normalized = normalizePostcode(postcodeInput.value);
+
+        if (/^[1-9][0-9]{3} [A-Z]{2}$/.test(normalized)) {
+            postcodeInput.value = normalized;
+        }
+    };
+
+    postcodeInput.addEventListener('blur', formatPostcodeField);
+}
 
 function initContactForm() {
     const form = document.getElementById('contact-form');
@@ -34,6 +54,7 @@ function initPrijsCalculator() {
     const resultBox = document.getElementById('prijs-result');
     const resultTotal = document.getElementById('prijs-result-total');
     const resultDistance = document.getElementById('prijs-result-distance');
+    const resultBreakdown = document.getElementById('prijs-result-breakdown');
     const resultMessage = document.getElementById('prijs-result-message');
     const distanceUrl = form?.dataset.distanceUrl;
 
@@ -49,7 +70,15 @@ function initPrijsCalculator() {
             return;
         }
 
+        const postcodeInput = document.getElementById('postcode');
         const data = new FormData(form);
+
+        if (postcodeInput) {
+            const normalizedPostcode = normalizePostcode(postcodeInput.value);
+            postcodeInput.value = normalizedPostcode;
+            data.set('postcode', normalizedPostcode);
+        }
+
         let menuItems = [];
 
         try {
@@ -73,6 +102,10 @@ function initPrijsCalculator() {
             resultDistance.classList.add('hidden');
         }
 
+        if (resultBreakdown) {
+            renderPriceBreakdown(resultBreakdown, null);
+        }
+
         if (resultTotal) {
             if (result.total != null) {
                 resultTotal.textContent = new Intl.NumberFormat('nl-NL', {
@@ -84,6 +117,10 @@ function initPrijsCalculator() {
                 resultTotal.textContent = '';
                 resultTotal.classList.add('hidden');
             }
+        }
+
+        if (result.total != null && resultBreakdown && result.breakdown) {
+            renderPriceBreakdown(resultBreakdown, result.breakdown);
         }
 
         if (result.total != null && resultDistance && distanceUrl) {

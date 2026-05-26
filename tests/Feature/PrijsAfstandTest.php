@@ -58,6 +58,33 @@ class PrijsAfstandTest extends TestCase
         $response->assertUnprocessable();
     }
 
+    public function test_distance_endpoint_normalizes_compact_postcode(): void
+    {
+        config(['services.google_maps.key' => 'test-key']);
+
+        Http::fake([
+            'maps.googleapis.com/maps/api/distancematrix/json*' => Http::response([
+                'status' => 'OK',
+                'rows' => [
+                    [
+                        'elements' => [
+                            [
+                                'status' => 'OK',
+                                'distance' => ['text' => '10 km', 'value' => 10000],
+                            ],
+                        ],
+                    ],
+                ],
+            ]),
+        ]);
+
+        $response = $this->getJson('/prijzen/afstand?postcode=1100AA');
+
+        $response->assertOk();
+
+        Http::assertSent(fn ($request) => $request['destinations'] === '1100 AA, Netherlands');
+    }
+
     public function test_distance_endpoint_returns_error_without_api_key(): void
     {
         config(['services.google_maps.key' => null]);

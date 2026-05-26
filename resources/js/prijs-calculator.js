@@ -40,6 +40,65 @@ export function countDips(menuItems) {
     return menuItems.filter((item) => item.kind === 'dip').length;
 }
 
+function formatEuro(amount) {
+    return new Intl.NumberFormat('nl-NL', {
+        style: 'currency',
+        currency: 'EUR',
+    }).format(amount);
+}
+
+export function buildPriceBreakdown(pricing, menuItems) {
+    const iceLines = [];
+
+    if (pricing.tier1Units > 0) {
+        iceLines.push({
+            label: `${pricing.tier1Units} × ${formatEuro(TIER1_UNIT_PRICE)}`,
+            amount: pricing.tier1Subtotal,
+        });
+    }
+
+    if (pricing.tier2Units > 0) {
+        iceLines.push({
+            label: `${pricing.tier2Units} × ${formatEuro(TIER2_UNIT_PRICE)}`,
+            amount: pricing.tier2Subtotal,
+        });
+    }
+
+    if (pricing.tier3Units > 0) {
+        iceLines.push({
+            label: `${pricing.tier3Units} × ${formatEuro(TIER3_UNIT_PRICE)}`,
+            amount: pricing.tier3Subtotal,
+        });
+    }
+
+    const dipLines = menuItems
+        .filter((item) => item.kind === 'dip')
+        .map((item) => ({
+            label: item.name,
+            amount: DIP_UNIT_PRICE,
+        }));
+
+    const sections = [];
+
+    if (iceLines.length > 0) {
+        sections.push({
+            title: 'IJsjes',
+            lines: iceLines,
+            subtotal: pricing.iceCreamSubtotal,
+        });
+    }
+
+    if (dipLines.length > 0) {
+        sections.push({
+            title: 'Dips',
+            lines: dipLines,
+            subtotal: pricing.dipSubtotal,
+        });
+    }
+
+    return { sections };
+}
+
 export function calculatePrice(inputs) {
     const {
         eventDate,
@@ -86,6 +145,7 @@ export function calculatePrice(inputs) {
     return {
         total: pricing.total,
         pricing,
+        breakdown: buildPriceBreakdown(pricing, menuItems),
         message: '',
     };
 }
@@ -99,10 +159,16 @@ function isEndAfterStart(startTime, endTime) {
     return endMinutes > startMinutes;
 }
 
-function normalizePostcode(value) {
+export function normalizePostcode(value) {
+    const compact = String(value).trim().replace(/\s+/g, '').toUpperCase();
+
+    if (/^[1-9][0-9]{3}[A-Z]{2}$/.test(compact)) {
+        return `${compact.slice(0, 4)} ${compact.slice(4)}`;
+    }
+
     return String(value).trim().replace(/\s+/g, ' ').toUpperCase();
 }
 
-function isValidDutchPostcode(value) {
-    return /^[1-9][0-9]{3} [A-Z]{2}$/.test(value);
+export function isValidDutchPostcode(value) {
+    return /^[1-9][0-9]{3} [A-Z]{2}$/.test(normalizePostcode(value));
 }

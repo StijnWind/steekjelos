@@ -86,7 +86,8 @@
                 <aside id="prijs-result" class="mt-6 hidden rounded-xl border border-steekijs-vanilla bg-steekijs-cream px-5 py-4" role="status" aria-live="polite">
                     <p class="font-semibold text-steekijs-chocolate">Indicatie</p>
                     <p id="prijs-result-total" class="mt-2 hidden font-display text-3xl tracking-wide text-steekijs-bordeaux"></p>
-                    <p id="prijs-result-distance" class="mt-1 hidden text-sm font-medium text-steekijs-chocolate"></p>
+                    <div id="prijs-result-breakdown" class="mt-4 hidden border-t border-steekijs-vanilla pt-4"></div>
+                    <p id="prijs-result-distance" class="mt-4 hidden text-sm font-medium text-steekijs-chocolate"></p>
                     <p id="prijs-result-message" class="mt-1 text-sm text-steekijs-gray"></p>
                 </aside>
             </article>
