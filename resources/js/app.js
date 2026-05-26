@@ -1,3 +1,4 @@
+import { fetchDrivingDistance } from './prijs-afstand';
 import { calculatePrice } from './prijs-calculator';
 import { initMenuSelection } from './prijs-menu';
 
@@ -31,13 +32,16 @@ function initContactForm() {
 function initPrijsCalculator() {
     const form = document.getElementById('prijs-calculator-form');
     const resultBox = document.getElementById('prijs-result');
+    const resultTotal = document.getElementById('prijs-result-total');
+    const resultDistance = document.getElementById('prijs-result-distance');
     const resultMessage = document.getElementById('prijs-result-message');
+    const distanceUrl = form?.dataset.distanceUrl;
 
     if (!form || !resultBox || !resultMessage) {
         return;
     }
 
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
         if (!form.checkValidity()) {
@@ -64,7 +68,46 @@ function initPrijsCalculator() {
             menuItems,
         });
 
-        resultMessage.textContent = result.message;
+        if (resultDistance) {
+            resultDistance.textContent = '';
+            resultDistance.classList.add('hidden');
+        }
+
+        if (resultTotal) {
+            if (result.total != null) {
+                resultTotal.textContent = new Intl.NumberFormat('nl-NL', {
+                    style: 'currency',
+                    currency: 'EUR',
+                }).format(result.total);
+                resultTotal.classList.remove('hidden');
+            } else {
+                resultTotal.textContent = '';
+                resultTotal.classList.add('hidden');
+            }
+        }
+
+        if (result.total != null && resultDistance && distanceUrl) {
+            resultDistance.textContent = 'Afstand berekenen…';
+            resultDistance.classList.remove('hidden');
+
+            try {
+                const distance = await fetchDrivingDistance(data.get('postcode'), distanceUrl);
+                resultDistance.textContent = distance.label;
+            } catch (error) {
+                resultDistance.textContent = error instanceof Error
+                    ? error.message
+                    : 'Afstand kon niet worden berekend.';
+            }
+        }
+
+        if (result.message) {
+            resultMessage.textContent = result.message;
+            resultMessage.classList.remove('hidden');
+        } else {
+            resultMessage.textContent = '';
+            resultMessage.classList.add('hidden');
+        }
+
         resultBox.classList.remove('hidden');
         resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });

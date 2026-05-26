@@ -35,4 +35,18 @@ return [
         ],
     ],
 
+    'google_maps' => [
+        'key' => env('GOOGLE_MAPS_API_KEY'),
+        'distance_origin' => env(
+            'GOOGLE_MAPS_DISTANCE_ORIGIN',
+            'Grote Markt 27, Groningen, Netherlands',
+        ),
+        // Alleen lokaal (Windows cURL 60): GOOGLE_MAPS_SSL_VERIFY=false
+        // Ondersteunt ook: Google_SSL_verify=false
+        'ssl_verify' => filter_var(
+            env('GOOGLE_MAPS_SSL_VERIFY', env('Google_SSL_verify', true)),
+            FILTER_VALIDATE_BOOLEAN,
+        ),
+    ],
+
 ];

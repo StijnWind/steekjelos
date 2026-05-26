@@ -15,11 +15,13 @@ export function initMenuSelection() {
             const id = button.dataset.menuId;
             const name = button.dataset.menuName;
 
+            const kind = button.dataset.menuKind || 'flavor';
+
             if (selectedItems.has(id)) {
                 selectedItems.delete(id);
                 button.setAttribute('aria-pressed', 'false');
             } else {
-                selectedItems.set(id, name);
+                selectedItems.set(id, { name, kind });
                 button.setAttribute('aria-pressed', 'true');
             }
 
@@ -29,7 +31,11 @@ export function initMenuSelection() {
 }
 
 function syncMenuSelection(hiddenInput, summary, countEl) {
-    const items = Array.from(selectedItems.entries()).map(([id, name]) => ({ id, name }));
+    const items = Array.from(selectedItems.entries()).map(([id, { name, kind }]) => ({
+        id,
+        name,
+        kind,
+    }));
 
     hiddenInput.value = JSON.stringify(items);
 
@@ -58,5 +64,9 @@ function escapeHtml(text) {
 }
 
 export function getSelectedMenuItems() {
-    return Array.from(selectedItems.entries()).map(([id, name]) => ({ id, name }));
+    return Array.from(selectedItems.entries()).map(([id, { name, kind }]) => ({
+        id,
+        name,
+        kind,
+    }));
 }

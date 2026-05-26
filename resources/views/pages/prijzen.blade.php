@@ -25,7 +25,11 @@
             <article class="card">
                 <h2 class="font-display text-2xl tracking-wide text-steekijs-chocolate uppercase">Bereken je prijs</h2>
 
-                <form id="prijs-calculator-form" class="mt-6 space-y-5">
+                <form
+                    id="prijs-calculator-form"
+                    class="mt-6 space-y-5"
+                    data-distance-url="{{ route('prijzen.afstand') }}"
+                >
                     <input type="hidden" id="menu-items-input" name="menu_items" value="">
 
                     <div>
@@ -46,7 +50,7 @@
 
                     <div class="grid gap-5 sm:grid-cols-2">
                         <div>
-                            <label for="guests" class="label">Hoeveel personen?</label>
+                            <label for="guests" class="label">Hoeveel ijsjes?</label>
                             <input type="number" id="guests" name="guests" min="1" value="50" required class="form-input">
                         </div>
                         <div>
@@ -81,6 +85,8 @@
 
                 <aside id="prijs-result" class="mt-6 hidden rounded-xl border border-steekijs-vanilla bg-steekijs-cream px-5 py-4" role="status" aria-live="polite">
                     <p class="font-semibold text-steekijs-chocolate">Indicatie</p>
+                    <p id="prijs-result-total" class="mt-2 hidden font-display text-3xl tracking-wide text-steekijs-bordeaux"></p>
+                    <p id="prijs-result-distance" class="mt-1 hidden text-sm font-medium text-steekijs-chocolate"></p>
                     <p id="prijs-result-message" class="mt-1 text-sm text-steekijs-gray"></p>
                 </aside>
             </article>

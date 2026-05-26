@@ -1,6 +1,45 @@
+const TIER1_UNIT_PRICE = 2;
+const TIER2_UNIT_PRICE = 1.75;
+const TIER3_UNIT_PRICE = 1.5;
+const TIER1_MAX = 50;
+const TIER2_MAX = 50;
+const DIP_UNIT_PRICE = 10;
+
 /**
- * Stub — vervang calculatePrice zodra tarieven/logica zijn aangeleverd.
+ * P(x,d) = 2·min(x,50) + 1,75·min(max(x−50,0),50) + 1,5·max(x−100,0) + 10d
  */
+export function calculateIceCreamPrice(iceCreamCount, dipCount = 0) {
+    const x = Math.max(0, Math.floor(Number(iceCreamCount)) || 0);
+    const d = Math.max(0, Math.floor(Number(dipCount)) || 0);
+
+    const tier1Units = Math.min(x, TIER1_MAX);
+    const tier2Units = Math.min(Math.max(x - TIER1_MAX, 0), TIER2_MAX);
+    const tier3Units = Math.max(x - TIER1_MAX - TIER2_MAX, 0);
+
+    const tier1Subtotal = tier1Units * TIER1_UNIT_PRICE;
+    const tier2Subtotal = tier2Units * TIER2_UNIT_PRICE;
+    const tier3Subtotal = tier3Units * TIER3_UNIT_PRICE;
+    const dipSubtotal = d * DIP_UNIT_PRICE;
+
+    return {
+        iceCreamCount: x,
+        dipCount: d,
+        tier1Units,
+        tier2Units,
+        tier3Units,
+        tier1Subtotal,
+        tier2Subtotal,
+        tier3Subtotal,
+        iceCreamSubtotal: tier1Subtotal + tier2Subtotal + tier3Subtotal,
+        dipSubtotal,
+        total: tier1Subtotal + tier2Subtotal + tier3Subtotal + dipSubtotal,
+    };
+}
+
+export function countDips(menuItems) {
+    return menuItems.filter((item) => item.kind === 'dip').length;
+}
+
 export function calculatePrice(inputs) {
     const {
         eventDate,
@@ -15,6 +54,13 @@ export function calculatePrice(inputs) {
         return {
             total: null,
             message: 'Vul alle verplichte velden in om een indicatie te krijgen.',
+        };
+    }
+
+    if (!Number.isFinite(guests) || guests < 1) {
+        return {
+            total: null,
+            message: 'Vul een geldig aantal ijsjes in (minimaal 1).',
         };
     }
 
@@ -34,14 +80,13 @@ export function calculatePrice(inputs) {
         };
     }
 
-    const flavorNames = menuItems.map((item) => item.name).join(', ');
-    const flavorPart = menuItems.length > 0
-        ? ` Geselecteerd: ${flavorNames}.`
-        : ' Tip: selecteer smaken op de menukaart voor een compleet voorstel.';
+    const dipCount = countDips(menuItems);
+    const pricing = calculateIceCreamPrice(guests, dipCount);
 
     return {
-        total: null,
-        message: `Bedankt! Je aanvraag voor ${guests} personen op ${formatDateNl(eventDate)} (${startTime}–${endTime}) in ${normalizedPostcode} is ontvangen.${flavorPart} Prijs wordt berekend zodra de tarieven zijn ingesteld.`,
+        total: pricing.total,
+        pricing,
+        message: '',
     };
 }
 
@@ -52,11 +97,6 @@ function isEndAfterStart(startTime, endTime) {
     const endMinutes = endH * 60 + endM;
 
     return endMinutes > startMinutes;
-}
-
-function formatDateNl(isoDate) {
-    const [year, month, day] = isoDate.split('-');
-    return `${day}-${month}-${year}`;
 }
 
 function normalizePostcode(value) {

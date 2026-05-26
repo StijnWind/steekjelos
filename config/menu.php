@@ -49,6 +49,32 @@ return [
             ],
         ],
         [
+            'name' => 'Dips',
+            'items' => [
+                [
+                    'id' => 'dip-chocolade',
+                    'name' => 'Chocolade dip',
+                    'description' => 'Vaste meerprijs per gekozen dip',
+                    'kind' => 'dip',
+                    'price_hint' => '+€10',
+                ],
+                [
+                    'id' => 'dip-karamel',
+                    'name' => 'Karamel dip',
+                    'description' => 'Vaste meerprijs per gekozen dip',
+                    'kind' => 'dip',
+                    'price_hint' => '+€10',
+                ],
+                [
+                    'id' => 'dip-aardbei',
+                    'name' => 'Aardbeien dip',
+                    'description' => 'Vaste meerprijs per gekozen dip',
+                    'kind' => 'dip',
+                    'price_hint' => '+€10',
+                ],
+            ],
+        ],
+        [
             'name' => "Extra's",
             'items' => [
                 [

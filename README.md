@@ -88,6 +88,18 @@ npm run build
 - Bedrijfsgegevens: [`config/steekijs.php`](config/steekijs.php)
 - Menukaart (smaken, opties): [`config/menu.php`](config/menu.php)
 
+### Afstand (Google Maps)
+
+Voor de rijafstand op `/prijzen` (vanaf Grote Markt 27, Groningen):
+
+1. Zet in `.env`: `GOOGLE_MAPS_API_KEY=jouw-sleutel`
+2. Schakel in Google Cloud de **Distance Matrix API** in voor dit project.
+3. Optioneel: pas `GOOGLE_MAPS_DISTANCE_ORIGIN` aan (standaard: `Grote Markt 27, Groningen, Netherlands`).
+
+De sleutel wordt alleen server-side gebruikt (`GET /prijzen/afstand`); de prijs zelf houdt nog geen rekening met afstand.
+
+**cURL error 60 (Windows):** PHP kan het SSL-certificaat niet verifiëren. Voor lokaal testen kun je in `.env` zetten: `GOOGLE_MAPS_SSL_VERIFY=false` (of `Google_SSL_verify=false`). Gebruik dit niet op productie. Beter op termijn: CA-bundle instellen in `php.ini` (`curl.cainfo` / `openssl.cafile`).
+
 ## Ontwikkeling
 
 Start Laravel, Vite en hulpdiensten tegelijk:

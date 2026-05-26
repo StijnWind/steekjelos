@@ -20,9 +20,15 @@
                                 class="menu-item menu-item-btn"
                                 data-menu-id="{{ $item['id'] }}"
                                 data-menu-name="{{ $item['name'] }}"
+                                data-menu-kind="{{ $item['kind'] ?? 'flavor' }}"
                                 aria-pressed="false"
                             >
-                                <span class="block font-semibold text-steekijs-chocolate">{{ $item['name'] }}</span>
+                                <span class="flex items-baseline justify-between gap-2">
+                                    <span class="font-semibold text-steekijs-chocolate">{{ $item['name'] }}</span>
+                                    @if (! empty($item['price_hint']))
+                                        <span class="shrink-0 text-sm font-medium text-steekijs-bordeaux">{{ $item['price_hint'] }}</span>
+                                    @endif
+                                </span>
                                 <span class="mt-0.5 block text-sm text-steekijs-gray">{{ $item['description'] }}</span>
                             </button>
                         </li>

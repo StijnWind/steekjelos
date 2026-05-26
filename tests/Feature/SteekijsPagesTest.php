@@ -37,6 +37,8 @@ class SteekijsPagesTest extends TestCase
         $response->assertSee('name="start_time"', false);
         $response->assertSee('name="end_time"', false);
         $response->assertSee('data-menu-id="vanille"', false);
+        $response->assertSee('data-menu-kind="dip"', false);
+        $response->assertSee('Hoeveel ijsjes?', false);
         $response->assertSee('menu-selection-summary', false);
         $response->assertSee('Waar verwacht je ons?', false);
         $response->assertSee('name="postcode"', false);
